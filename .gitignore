@@ -3,7 +3,11 @@
 
 # ただし、以下のファイル・フォルダは Git に含める
 !.gitignore
+!Assets/
 !Assets/Scripts/
+!Assets/Scripts/**/*
+!Assets/Scenes/
 !Assets/Scenes/MainScene.unity
+!ProjectSettings/
 !ProjectSettings/ProjectSettings.asset
 !ProjectSettings/EditorBuildSettings.asset
