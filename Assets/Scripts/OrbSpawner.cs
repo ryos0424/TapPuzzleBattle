@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class OrbSpawner : MonoBehaviour
 {
@@ -9,8 +10,10 @@ public class OrbSpawner : MonoBehaviour
     private List<Vector2> spawnedPositions = new List<Vector2>();
     private int remainingPairs;
 
-    private Color[] possibleColors = { Color.red, Color.blue, Color.green, Color.yellow, Color.magenta, Color.cyan }; // 使用する色
-    private List<Color> assignedColors = new List<Color>(); // ペア用の色リスト
+    private Color[] possibleColors = { Color.red, Color.blue, Color.green, Color.yellow, Color.magenta, Color.cyan };
+    private List<Color> assignedColors = new List<Color>();
+
+    private List<GameObject> spawnedOrbs = new List<GameObject>(); // 修正: 生成されたオーブを管理
 
     void Start()
     {
@@ -27,7 +30,8 @@ public class OrbSpawner : MonoBehaviour
 
         spawnedPositions.Clear();
         assignedColors.Clear();
-        remainingPairs = 3; // 3ペア（6個）
+        remainingPairs = 3;
+        spawnedOrbs.Clear(); // 修正: 既存のオーブリストをクリア
 
         List<Color> selectedColors = new List<Color>();
         while (selectedColors.Count < 3)
@@ -65,6 +69,7 @@ public class OrbSpawner : MonoBehaviour
             if (orbPrefab != null)
             {
                 GameObject newOrb = Instantiate(orbPrefab, spawnPosition, Quaternion.identity);
+                spawnedOrbs.Add(newOrb); // 修正: リストに追加
                 Orb orbScript = newOrb.GetComponent<Orb>();
                 orbScript.SetSpawner(this);
                 orbScript.SetColor(assignedColors[i]);
@@ -92,13 +97,46 @@ public class OrbSpawner : MonoBehaviour
         if (remainingPairs <= 0)
         {
             Debug.Log("すべてのオーブが消えた！ 敵にダメージを与える");
-            GameManager.Instance.DamageEnemy(1); // **修正**
-            GameManager.Instance.ResetTimer();
-            Invoke("SpawnOrbs", 0.5f);
+
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.DamageEnemy(1);
+                GameManager.Instance.ResetTimer();
+                RespawnOrbs(); // ★タイムリミット切れでもオーブを再配置できるようにする
+            }
+            else
+            {
+                Debug.LogError("GameManager の Instance が null です。");
+            }
         }
     }
 
+    /// </summary>
+    public void RespawnOrbs()
+    {
+        ClearOrbs(); // 修正: すでに生成されたオーブを削除
+        StartCoroutine(RespawnAfterDelay());
+    }
 
+    private IEnumerator RespawnAfterDelay()
+    {
+        yield return new WaitForSeconds(0.1f);
+        SpawnOrbs();
+    }
+
+    // 既存のオーブを削除するメソッドを追加
+    private void ClearOrbs()
+    {
+        // 修正: 生成されたオーブをリストから削除する
+        foreach (GameObject orb in spawnedOrbs)
+        {
+            if (orb != null)
+            {
+                Destroy(orb);
+            }
+        }
+        spawnedOrbs.Clear(); // 修正: リストをクリア
+    }
 
     private void ShuffleColors(List<Color> colors)
     {
