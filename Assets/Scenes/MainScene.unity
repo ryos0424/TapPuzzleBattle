@@ -821,6 +821,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 2
+  timeLimit: 10
   enemyLifePanel: {fileID: 78871930}
   heartPrefab: {fileID: 7376121252952318396, guid: 7eaa0f98dbc07dc40b39abeeca9fd2c6, type: 3}
   fullHeart: {fileID: 7025655285183091601, guid: 36edb899f0725df4c8b1eaf6629cb697, type: 3}
@@ -976,9 +977,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 336829544}
-  enemy: {fileID: 953691397}
   whiteFlashImage: {fileID: 1277433150}
   damageFlashImage: {fileID: 1923829410}
+  playerLifePanel: {fileID: 1843348466}
+  heartPrefab: {fileID: 7376121252952318396, guid: bbe1c04424e57bd41a763bf416b956c8, type: 3}
+  fullHeart: {fileID: -4573347969059075825, guid: 86f4d9a6bde61a14b832c906c67c641b, type: 3}
+  emptyHeart: {fileID: -3598626417305715000, guid: 7ed6b96858df333459370b22ac1c9afd, type: 3}
+  enemy: {fileID: 953691397}
+  monsterSpawner: {fileID: 268530107}
+  orbSpawner: {fileID: 1533419378}
   backgroundImage: {fileID: 793775862}
   fieldBackgrounds:
   - {fileID: -7251357544008844538, guid: a848370c4ba236a478502eeaff088a69, type: 3}
@@ -986,13 +993,7 @@ MonoBehaviour:
   - {fileID: -38854856996558905, guid: 34f495b6d266ae44ebbdd175560f4b73, type: 3}
   - {fileID: -3147194229416171182, guid: e5b3bc603b3c2fe4aa974a1563058d98, type: 3}
   - {fileID: 6712644119028215927, guid: c7139bf631d552f419e16090d0c15eb1, type: 3}
-  playerLifePanel: {fileID: 1843348466}
-  heartPrefab: {fileID: 7376121252952318396, guid: bbe1c04424e57bd41a763bf416b956c8, type: 3}
-  fullHeart: {fileID: -4573347969059075825, guid: 86f4d9a6bde61a14b832c906c67c641b, type: 3}
-  emptyHeart: {fileID: -3598626417305715000, guid: 7ed6b96858df333459370b22ac1c9afd, type: 3}
-  monsterSpawner: {fileID: 268530107}
   playerLife: 3
-  timeLimit: 10
 --- !u!4 &1179095225
 Transform:
   m_ObjectHideFlags: 0
